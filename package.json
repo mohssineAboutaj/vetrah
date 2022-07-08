@@ -1,6 +1,6 @@
 {
   "name": "vetrah",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "A simple project based on Vue.js and Tailwindcss to support the #fetrah movment",
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -46,5 +46,31 @@
     "not ie 11"
   ],
   "license": "MIT",
-  "author": "Mohssine Aboutaj"
+  "author": "Mohssine Aboutaj",
+  "keywords": [
+    "fetrah",
+    "support",
+    "fetrah",
+    "anti",
+    "LGBTQ+",
+    "fetrah",
+    "filter",
+    "add",
+    "fetrah",
+    "image",
+    "fetrah",
+    "merge",
+    "photo",
+    "make",
+    "fetrah",
+    "cover"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mohssineAboutaj/vetrah.git"
+  },
+  "bugs": {
+    "url": "https://github.com/mohssineAboutaj/vetrah/issues"
+  },
+  "homepage": "https://github.com/mohssineAboutaj/vetrah#readme"
 }

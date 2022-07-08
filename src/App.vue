@@ -1,12 +1,15 @@
 <template>
   <div class="bg-blue-100 overflow-x-hidden relative">
     <nav
-      class="top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2"
-      :class="getStarted ? 'relative text-secondary' : 'absolute text-primary'"
+      class="fixed top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2 text-primary"
     >
-      <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
+      <a href="/">
+        <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
+      </a>
       <span class="uppercase">{{ APP_NAME }}</span>
-      <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
+      <a :href="APP_REPO" target="_blanc">
+        <github-icon size="35" />
+      </a>
     </nav>
     <header
       class="w-screen bg-cover text-blue-100 transform transition-all ease-in-out duration-1000 overflow-hidden relative"
@@ -48,7 +51,7 @@
       >
         <label
           for="dropzone-file"
-          class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer bg-primary border-secondary hover:bg-transparent transition-colors ease-in-out duration-300 hover:border-primary text-secondary hover:text-primary rounded-xl"
+          class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer bg-primary border-secondary hover:bg-transparent transition-colors ease-in-out duration-300 hover:border-primary text-secondary hover:text-primary rounded-xl max-w-xl"
         >
           <div class="flex flex-col justify-center items-center pt-5 pb-6">
             <upload-icon size="80" class="mb-4" />
@@ -71,7 +74,7 @@
         </label>
       </div>
       <div v-else>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center mb-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 items-center mb-4">
           <div>
             <label
               for="steps-range"
@@ -105,27 +108,27 @@
               </label>
             </div>
           </div>
-          <div class="grid grid-cols-2 gap-3">
-            <label
-              class="btn btn-secondary w-full cursor-pointer"
-              for="dropzone-file"
-            >
-              change image
-            </label>
-            <button class="btn btn-secondary w-full" @click="reset">
-              reset all
-            </button>
-            <button class="btn btn-third w-full" @click="download('png')">
-              download png
-            </button>
-            <button class="btn btn-third w-full" @click="download('jpg')">
-              download jpg
-            </button>
-          </div>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
+          <label
+            class="btn btn-secondary w-full cursor-pointer"
+            for="dropzone-file"
+          >
+            change image
+          </label>
+          <button class="btn btn-secondary w-full" @click="reset">
+            reset all
+          </button>
+          <button class="btn btn-third w-full" @click="download('png')">
+            download png
+          </button>
+          <button class="btn btn-third w-full" @click="download('jpg')">
+            download jpg
+          </button>
         </div>
         <div
           id="image-container"
-          class="relative w-full h-auto overflow-hidden max-w-4xl mx-auto"
+          class="relative w-full h-auto overflow-hidden max-w-xl mx-auto"
         >
           <img :src="image" alt="image" class="z-20 relative w-full h-auto" />
           <img
@@ -151,6 +154,7 @@
 import { saveAsJpeg, saveAsPng } from "save-html-as-image";
 import pkg from "../package.json";
 import UploadIcon from "vue-material-design-icons/CloudUploadOutline.vue";
+import GithubIcon from "vue-material-design-icons/Github.vue";
 
 const defaultConfig = {
   opcaity: 50,
@@ -159,12 +163,13 @@ const defaultConfig = {
 
 export default {
   name: "App",
-  components: { UploadIcon },
+  components: { UploadIcon, GithubIcon },
   data: () => ({
     title: "fetrah",
     APP_NAME: pkg.name,
+    APP_REPO: pkg.homepage,
     image: "",
-    getStarted: !false,
+    getStarted: false,
     config: Object.assign({}, defaultConfig),
     defaultConfig,
     acceptFilesType: ["image/png", "image/jpeg", "image/jpg"],
