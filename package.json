@@ -1,6 +1,6 @@
 {
   "name": "vetrah",
-  "version": "0.6.0",
+  "version": "0.6.1",
   "description": "A simple project based on Vue.js and Tailwindcss to support the #fetrah movment",
   "scripts": {
     "serve": "vue-cli-service serve",
