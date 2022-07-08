@@ -39,6 +39,8 @@ module.exports = {
       fuchsia: colors.fuchsia,
       pink: colors.pink,
       rose: colors.rose,
+      primary: "#4DC6E1",
+      secondary: "#EB4592",
     }),
     columns: {
       auto: "auto",
@@ -234,7 +236,11 @@ module.exports = {
       150: "1.5",
       200: "2",
     },
-    container: {},
+    container: {
+      padding: {
+        DEFAULT: "3rem",
+      },
+    },
     content: {
       none: "none",
     },

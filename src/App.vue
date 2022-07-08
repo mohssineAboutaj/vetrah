@@ -1,14 +1,15 @@
 <template>
-  <div class="bg-blue-100 overflow-hidden relative">
+  <div class="bg-blue-100 overflow-x-hidden relative">
     <nav
-      class="absolute top-0 inset-x-0 z-50 text-blue-100 font-black flex justify-between items-center p-2"
+      class="top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2"
+      :class="getStarted ? 'relative text-secondary' : 'absolute text-primary'"
     >
       <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
       <span class="uppercase">{{ APP_NAME }}</span>
       <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
     </nav>
     <header
-      class="w-screen bg-cover text-white transform transition-all ease-in-out duration-1000 overflow-hidden relative"
+      class="w-screen bg-cover text-blue-100 transform transition-all ease-in-out duration-1000 overflow-hidden relative"
       :class="getStarted ? '-translate-y-full h-0' : '-translate-y-0 h-screen'"
     >
       <img
@@ -29,7 +30,10 @@
               make your own cover and support {{ title }}
             </h2>
             <div class="text-center inline-block">
-              <button class="btn mt-10" @click="getStarted = true">
+              <button
+                class="btn btn-primary bg-green-700 mt-10"
+                @click="getStarted = true"
+              >
                 get started
               </button>
             </div>
@@ -37,37 +41,23 @@
         </div>
       </div>
     </header>
-    <main class="container mx-auto h-screen">
+    <main class="container mx-auto h-full">
       <div
         v-if="!image"
-        class="flex justify-center items-center w-screen h-screen"
+        class="flex justify-center items-center w-full h-screen"
       >
         <label
           for="dropzone-file"
-          class="flex flex-col justify-center items-center w-full h-64 bg-gray-50 rounded-lg border-2 border-gray-300 border-dashed cursor-pointer dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+          class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer bg-primary border-secondary hover:bg-transparent transition-colors ease-in-out duration-300 hover:border-primary text-secondary hover:text-primary rounded-xl"
         >
           <div class="flex flex-col justify-center items-center pt-5 pb-6">
-            <svg
-              class="mb-3 w-10 h-10 text-gray-400"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <path
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
-                d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-              ></path>
-            </svg>
-            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400">
-              <span class="font-semibold">Click to upload</span> or drag and
-              drop
+            <upload-icon size="80" class="mb-4" />
+            <p class="mb-2 text-sm">
+              <span class="font-semibold">Click to upload</span>
+              <span v-if="false">or</span>
+              <span v-if="false" class="font-semibold">drag and drop</span>
             </p>
-            <p
-              class="text-xs text-gray-500 dark:text-gray-400 uppercase font-bold"
-            >
+            <p class="text-md uppercase font-bold">
               {{ acceptFilesType.join(", ").replaceAll("image/", "") }}
             </p>
           </div>
@@ -81,13 +71,11 @@
         </label>
       </div>
       <div v-else>
-        <div
-          class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center mb-4 mx-4"
-        >
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-2 items-center mb-4">
           <div>
             <label
               for="steps-range"
-              class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300"
+              class="block mb-2 text-sm font-medium text-blue-700300 capitalize"
             >
               background opacity
             </label>
@@ -98,7 +86,7 @@
               min="5"
               max="95"
               step="5"
-              class="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+              class="w-full h-2 bg-primary rounded-lg appearance-none cursor-pointer"
             />
           </div>
           <div>
@@ -107,24 +95,39 @@
                 v-model="config.bgTop"
                 id="default-checkbox"
                 type="checkbox"
-                class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                class="w-4 h-4 rounded text-primary border-blue-100 focus:ring-primary focus:ring-1"
               />
               <label
                 for="default-checkbox"
-                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                >background in top</label
+                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 capitalize"
               >
+                {{ title }} background in top
+              </label>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <label class="btn w-full cursor-pointer" for="dropzone-file">
+            <label
+              class="btn btn-secondary w-full cursor-pointer"
+              for="dropzone-file"
+            >
               change image
             </label>
-            <button class="btn-reverse w-full" @click="reset">reset all</button>
+            <button class="btn btn-secondary w-full" @click="reset">
+              reset all
+            </button>
+            <button class="btn btn-third w-full" @click="download('png')">
+              download png
+            </button>
+            <button class="btn btn-third w-full" @click="download('jpg')">
+              download jpg
+            </button>
           </div>
         </div>
-        <div class="relative w-full overflow-hidden max-w-4xl mx-auto">
-          <img :src="image" alt="image" class="z-20 w-full relative" />
+        <div
+          id="image-container"
+          class="relative w-full h-auto overflow-hidden max-w-4xl mx-auto"
+        >
+          <img :src="image" alt="image" class="z-20 relative w-full h-auto" />
           <img
             src="./assets/fetrah.jpg"
             alt="fetrah-bg"
@@ -132,7 +135,6 @@
             :class="[setOpacity, config.bgTop ? 'z-30' : 'z-10']"
           />
         </div>
-        {{ config }}
       </div>
     </main>
     <input
@@ -146,7 +148,9 @@
 </template>
 
 <script>
-import { name as APP_NAME } from "../package.json";
+import { saveAsJpeg, saveAsPng } from "save-html-as-image";
+import pkg from "../package.json";
+import UploadIcon from "vue-material-design-icons/CloudUploadOutline.vue";
 
 const defaultConfig = {
   opcaity: 50,
@@ -155,11 +159,12 @@ const defaultConfig = {
 
 export default {
   name: "App",
+  components: { UploadIcon },
   data: () => ({
     title: "fetrah",
-    APP_NAME,
+    APP_NAME: pkg.name,
     image: "",
-    getStarted: false,
+    getStarted: !false,
     config: Object.assign({}, defaultConfig),
     defaultConfig,
     acceptFilesType: ["image/png", "image/jpeg", "image/jpg"],
@@ -231,6 +236,19 @@ export default {
     reset() {
       this.config = this.defaultConfig;
       this.image = "";
+    },
+    download(type = "png") {
+      const node = document.getElementById("image-container");
+      const options = {
+        filename: this.APP_NAME + "-" + Date.now(),
+        printDate: false,
+      };
+
+      if (type === "png") {
+        saveAsPng(node, options);
+      } else {
+        saveAsJpeg(node, options);
+      }
     },
   },
 };

@@ -2,12 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* extend */
+/* extend tailwind */
 
+/* buttons */
 .btn {
-  @apply rounded-lg py-4 px-6 mt-10 uppercase bg-blue-300 text-pink-500 hover:text-blue-300 hover:bg-pink-500 transition-colors ease-in-out duration-500 font-bold;
+  @apply rounded-lg py-4 px-6 mt-10 uppercase transition-colors ease-in-out duration-500 font-bold;
 }
 
-.btn-reverse {
-  @apply rounded-lg py-4 px-6 mt-10 uppercase text-blue-300 bg-pink-500 hover:bg-blue-300 hover:text-pink-500 transition-colors ease-in-out duration-500 font-bold;
+.btn-primary {
+  @apply bg-primary text-secondary hover:text-primary hover:bg-secondary;
+}
+
+.btn-secondary {
+  @apply text-primary bg-secondary hover:bg-primary hover:text-secondary;
+}
+
+.btn-third {
+  @apply text-blue-100 bg-blue-700 hover:bg-blue-600;
 }
