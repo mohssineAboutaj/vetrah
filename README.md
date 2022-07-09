@@ -1,8 +1,9 @@
-# vetrah
+# Vetrah
 
-- [vetrah](#vetrah)
+- [Vetrah](#vetrah)
   - [About](#about)
   - [Features](#features)
+  - [Contributors](#contributors)
   - [Project setup (Developers only)](#project-setup-developers-only)
     - [Install](#install)
     - [Compiles and hot-reloads for development](#compiles-and-hot-reloads-for-development)
@@ -19,6 +20,10 @@ An open souce project based on [Vue.js](https://vuejs.org/) and [Tailwindcss](ht
 
 - Add fetrah background in your image
 - download it as **PNG** or **JPG/JPEG**
+
+## Contributors
+
+- [Guellaf](https://github.com/Guellaf)
 
 ## Project setup (Developers only)
 

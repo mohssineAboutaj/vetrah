@@ -1,26 +1,11 @@
 <template>
   <div class="bg-light dark:bg-dark dark:text-light overflow-x-hidden relative">
-    <nav
-      class="fixed top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2 trans-colors"
-      :class="
-        moved
-          ? 'bg-light text-secondary dark:bg-dark dark:text-primary'
-          : 'text-primary'
-      "
-    >
-      <a href="/">
-        <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
-      </a>
-      <span class="uppercase">{{ APP_NAME }}</span>
-      <a :href="APP_REPO" target="_blanc">
-        <github-icon size="35" />
-      </a>
-    </nav>
+    <navbar-component />
     <header
       class="w-screen bg-cover text-light transform transition-all ease-in-out duration-1000 overflow-hidden relative"
       :class="getStarted ? '-translate-y-full h-0' : '-translate-y-0 h-screen'"
     >
-      <bg />
+      <bg-component />
       <div
         class="flex justify-center items-center w-full h-full bg-black bg-opacity-50 relative z-10"
       >
@@ -50,7 +35,7 @@
           class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer trans-colors rounded-xl max-w-xl bg-primary text-light border-light hover:bg-transparent hover:text-secondary hover:border-secondary dark:bg-secondary dark:border-transparent dark:hover:text-primary dark:hover:border-primary"
         >
           <div class="flex flex-col justify-center items-center pt-5 pb-6">
-            <upload-icon size="80" class="mb-4" />
+            <upload-icon :size="80" class="mb-4" />
             <p>
               <span class="font-semibold">Click to upload</span>
               <span v-if="false">or</span>
@@ -128,27 +113,11 @@
           class="relative w-full h-auto overflow-hidden max-w-xl mx-auto"
         >
           <img :src="image" alt="image" class="z-20 relative w-full h-auto" />
-          <bg :class="[config.bgTop ? 'z-30' : 'z-10', setOpacity]" />
+          <bg-component :class="[config.bgTop ? 'z-30' : 'z-10', setOpacity]" />
         </div>
       </div>
     </main>
-    <footer class="text-center text-third dark:text-light">
-      <div class="container mx-auto">
-        <h2>about {{ title }}</h2>
-        <p>
-          The main objective of Fetrah is to be a general flag that allows all
-          individuals, groups, and factions, to declare their explicit and
-          unequivocal rejection of all the directed lopy that are promoted and
-          of everything contrary to the natural human instinct,
-        </p>
-      </div>
-      <div class="my-4 capitalize grid grid-cols-2 gap-2">
-        <div>
-          created by <b>{{ APP_AUTHOR }}</b>
-        </div>
-        <div>{{ new Date().getFullYear() }} all right reserved</div>
-      </div>
-    </footer>
+    <footer-component />
 
     <!-- upload input -->
     <input
@@ -163,10 +132,11 @@
 
 <script>
 import { saveAsJpeg, saveAsPng } from "save-html-as-image";
-import pkg from "../package.json";
-import Bg from "./components/bg.vue";
+import { title } from "@/config";
 import UploadIcon from "vue-material-design-icons/CloudUploadOutline.vue";
-import GithubIcon from "vue-material-design-icons/Github.vue";
+import NavbarComponent from "./components/NavbarComponent.vue";
+import BgComponent from "./components/BgComponent.vue";
+import FooterComponent from "./components/FooterComponent.vue";
 
 const defaultConfig = {
   opcaity: 50,
@@ -175,12 +145,9 @@ const defaultConfig = {
 
 export default {
   name: "App",
-  components: { Bg, UploadIcon, GithubIcon },
+  components: { UploadIcon, NavbarComponent, BgComponent, FooterComponent },
   data: () => ({
-    title: "fetrah",
-    APP_NAME: pkg.name,
-    APP_REPO: pkg.homepage,
-    APP_AUTHOR: pkg.author,
+    title,
     globalStringToReplace: "image/",
     image: "",
     getStarted: false,
@@ -235,17 +202,7 @@ export default {
       }
     },
   },
-  mounted() {
-    this.checkScrollY();
-
-    window.addEventListener("scroll", () => {
-      this.checkScrollY();
-    });
-  },
   methods: {
-    checkScrollY() {
-      this.moved = window.scrollY > 5;
-    },
     readAsDataURL(file) {
       return new Promise((resolve, reject) => {
         const fr = new FileReader();
