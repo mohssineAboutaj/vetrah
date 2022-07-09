@@ -1,8 +1,8 @@
 <template>
   <div class="bg-blue-100 overflow-x-hidden relative">
     <nav
-      class="fixed top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2 text-secondary"
-      :class="getStarted ? 'bg-blue-100' : ''"
+      class="fixed top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2 trans-colors"
+      :class="moved ? 'bg-blue-100 text-secondary' : 'text-primary'"
     >
       <a href="/">
         <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
@@ -45,7 +45,7 @@
       >
         <label
           for="dropzone-file"
-          class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer bg-primary border-secondary hover:bg-transparent transition-colors ease-in-out duration-300 hover:border-primary text-secondary hover:text-primary rounded-xl max-w-xl"
+          class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer bg-primary border-secondary hover:bg-transparent trans-colors hover:border-primary text-secondary hover:text-primary rounded-xl max-w-xl"
         >
           <div class="flex flex-col justify-center items-center pt-5 pb-6">
             <upload-icon size="80" class="mb-4" />
@@ -118,10 +118,12 @@
           class="relative w-full h-auto overflow-hidden max-w-xl mx-auto"
         >
           <img :src="image" alt="image" class="z-20 relative w-full h-auto" />
-          <bg :class="[setOpacity, config.bgTop ? 'z-30' : 'z-10']" />
+          <bg :class="[config.bgTop ? 'z-30' : 'z-10', setOpacity]" />
         </div>
       </div>
     </main>
+
+    <!-- upload input -->
     <input
       id="dropzone-file"
       type="file"
@@ -153,6 +155,7 @@ export default {
     APP_REPO: pkg.homepage,
     image: "",
     getStarted: false,
+    moved: false,
     config: Object.assign({}, defaultConfig),
     defaultConfig,
     acceptFilesType: ["image/png", "image/jpeg", "image/jpg"],
@@ -203,7 +206,17 @@ export default {
       }
     },
   },
+  mounted() {
+    this.checkScrollY();
+
+    window.addEventListener("scroll", () => {
+      this.checkScrollY();
+    });
+  },
   methods: {
+    checkScrollY() {
+      this.moved = window.scrollY > 5;
+    },
     readAsDataURL(file) {
       return new Promise((resolve, reject) => {
         const fr = new FileReader();
