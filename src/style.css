@@ -4,13 +4,22 @@
 
 /* extend tailwind */
 
+/* global elements */
+h2 {
+  @apply text-4xl font-semibold capitalize mt-2 mb-4;
+}
+
+p {
+  @apply my-2 text-base;
+}
+
 /* buttons */
 .btn {
   @apply rounded-lg py-4 px-6 mt-10 uppercase transition-colors ease-in-out duration-500 font-bold text-center w-full;
 }
 
 .btn-primary {
-  @apply text-blue-100 bg-blue-500 hover:bg-primary;
+  @apply text-primary bg-third hover:bg-primary hover:text-third;
 }
 
 .trans-colors {

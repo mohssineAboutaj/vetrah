@@ -1,8 +1,12 @@
 <template>
-  <div class="bg-blue-100 overflow-x-hidden relative">
+  <div class="bg-light dark:bg-dark dark:text-light overflow-x-hidden relative">
     <nav
       class="fixed top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2 trans-colors"
-      :class="moved ? 'bg-blue-100 text-secondary' : 'text-primary'"
+      :class="
+        moved
+          ? 'bg-light text-secondary dark:bg-dark dark:text-primary'
+          : 'text-primary'
+      "
     >
       <a href="/">
         <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
@@ -13,7 +17,7 @@
       </a>
     </nav>
     <header
-      class="w-screen bg-cover text-blue-100 transform transition-all ease-in-out duration-1000 overflow-hidden relative"
+      class="w-screen bg-cover text-light transform transition-all ease-in-out duration-1000 overflow-hidden relative"
       :class="getStarted ? '-translate-y-full h-0' : '-translate-y-0 h-screen'"
     >
       <bg />
@@ -26,9 +30,7 @@
             <div class="mb-4">#support{{ title }}</div>
           </h1>
           <div>
-            <h2 class="text-4xl font-semibold capitalize">
-              make your own cover and support {{ title }}
-            </h2>
+            <h2>make your own cover and support {{ title }}</h2>
             <div class="text-center inline-block">
               <button class="btn btn-primary mt-10" @click="getStarted = true">
                 get started
@@ -45,17 +47,25 @@
       >
         <label
           for="dropzone-file"
-          class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer bg-primary border-secondary hover:bg-transparent trans-colors hover:border-primary text-secondary hover:text-primary rounded-xl max-w-xl"
+          class="flex flex-col justify-center items-center w-full h-64 border-2 border-dashed cursor-pointer trans-colors rounded-xl max-w-xl bg-primary text-light border-light hover:bg-transparent hover:text-secondary hover:border-secondary dark:bg-secondary dark:border-transparent dark:hover:text-primary dark:hover:border-primary"
         >
           <div class="flex flex-col justify-center items-center pt-5 pb-6">
             <upload-icon size="80" class="mb-4" />
-            <p class="mb-2 text-sm">
+            <p>
               <span class="font-semibold">Click to upload</span>
               <span v-if="false">or</span>
               <span v-if="false" class="font-semibold">drag and drop</span>
             </p>
-            <p class="text-md uppercase font-bold">
-              {{ acceptFilesType.join(", ").replaceAll("image/", "") }}
+            <p class="uppercase font-bold">
+              {{
+                acceptFilesType.join(", ").replaceAll(globalStringToReplace, "")
+              }}
+            </p>
+            <p>
+              <u class="uppercase font-bold">
+                {{ acceptFilesType[0].replace(globalStringToReplace, "") }}
+              </u>
+              preferd
             </p>
           </div>
           <input
@@ -72,7 +82,7 @@
           <div class="col-span-4 md:col-span-3 flex items-center">
             <label
               for="steps-range"
-              class="block mb-2 text-sm font-medium text-blue-700300 capitalize"
+              class="block mb-2 text-sm font-medium capitalize"
             >
               background opacity
             </label>
@@ -91,7 +101,7 @@
               v-model="config.bgTop"
               id="default-checkbox"
               type="checkbox"
-              class="w-4 h-4 rounded text-primary border-blue-100 focus:ring-primary focus:ring-1"
+              class="w-4 h-4 rounded text-primary border-light focus:ring-primary focus:ring-1"
             />
             <label
               for="default-checkbox"
@@ -122,6 +132,23 @@
         </div>
       </div>
     </main>
+    <footer class="text-center text-third dark:text-light">
+      <div class="container mx-auto">
+        <h2>about {{ title }}</h2>
+        <p>
+          The main objective of Fetrah is to be a general flag that allows all
+          individuals, groups, and factions, to declare their explicit and
+          unequivocal rejection of all the directed lopy that are promoted and
+          of everything contrary to the natural human instinct,
+        </p>
+      </div>
+      <div class="my-4 capitalize grid grid-cols-2 gap-2">
+        <div>
+          created by <b>{{ APP_AUTHOR }}</b>
+        </div>
+        <div>{{ new Date().getFullYear() }} all right reserved</div>
+      </div>
+    </footer>
 
     <!-- upload input -->
     <input
@@ -137,9 +164,9 @@
 <script>
 import { saveAsJpeg, saveAsPng } from "save-html-as-image";
 import pkg from "../package.json";
+import Bg from "./components/bg.vue";
 import UploadIcon from "vue-material-design-icons/CloudUploadOutline.vue";
 import GithubIcon from "vue-material-design-icons/Github.vue";
-import Bg from "./components/bg.vue";
 
 const defaultConfig = {
   opcaity: 50,
@@ -148,11 +175,13 @@ const defaultConfig = {
 
 export default {
   name: "App",
-  components: { UploadIcon, GithubIcon, Bg },
+  components: { Bg, UploadIcon, GithubIcon },
   data: () => ({
     title: "fetrah",
     APP_NAME: pkg.name,
     APP_REPO: pkg.homepage,
+    APP_AUTHOR: pkg.author,
+    globalStringToReplace: "image/",
     image: "",
     getStarted: false,
     moved: false,

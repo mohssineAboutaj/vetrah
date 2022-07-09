@@ -41,6 +41,9 @@ module.exports = {
       rose: colors.rose,
       primary: "#4DC6E1",
       secondary: "#EB4592",
+      third: colors.blue[600],
+      light: colors.blue[100],
+      dark: colors.blue[900],
     }),
     columns: {
       auto: "auto",
