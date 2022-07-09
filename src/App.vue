@@ -1,7 +1,8 @@
 <template>
   <div class="bg-blue-100 overflow-x-hidden relative">
     <nav
-      class="fixed top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2 text-primary"
+      class="fixed top-0 inset-x-0 z-50 font-black flex justify-between items-center p-2 text-secondary"
+      :class="getStarted ? 'bg-blue-100' : ''"
     >
       <a href="/">
         <img src="./assets/logo.png" alt="logo" class="w-10 h-10" />
@@ -15,11 +16,7 @@
       class="w-screen bg-cover text-blue-100 transform transition-all ease-in-out duration-1000 overflow-hidden relative"
       :class="getStarted ? '-translate-y-full h-0' : '-translate-y-0 h-screen'"
     >
-      <img
-        src="./assets/fetrah.jpg"
-        alt="fetrah-bg"
-        class="absolute inset-0 h-full w-full z-0"
-      />
+      <bg />
       <div
         class="flex justify-center items-center w-full h-full bg-black bg-opacity-50 relative z-10"
       >
@@ -33,10 +30,7 @@
               make your own cover and support {{ title }}
             </h2>
             <div class="text-center inline-block">
-              <button
-                class="btn btn-primary bg-green-700 mt-10"
-                @click="getStarted = true"
-              >
+              <button class="btn btn-primary mt-10" @click="getStarted = true">
                 get started
               </button>
             </div>
@@ -44,7 +38,7 @@
         </div>
       </div>
     </header>
-    <main class="container mx-auto h-full">
+    <main class="container mx-auto h-full my-20">
       <div
         v-if="!image"
         class="flex justify-center items-center w-full h-screen"
@@ -74,8 +68,8 @@
         </label>
       </div>
       <div v-else>
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-2 items-center mb-4">
-          <div>
+        <div class="grid grid-cols-4 gap-8 items-center mb-4">
+          <div class="col-span-4 md:col-span-3 flex items-center">
             <label
               for="steps-range"
               class="block mb-2 text-sm font-medium text-blue-700300 capitalize"
@@ -92,37 +86,30 @@
               class="w-full h-2 bg-primary rounded-lg appearance-none cursor-pointer"
             />
           </div>
-          <div>
-            <div class="flex items-center mb-4">
-              <input
-                v-model="config.bgTop"
-                id="default-checkbox"
-                type="checkbox"
-                class="w-4 h-4 rounded text-primary border-blue-100 focus:ring-primary focus:ring-1"
-              />
-              <label
-                for="default-checkbox"
-                class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 capitalize"
-              >
-                {{ title }} background in top
-              </label>
-            </div>
+          <div class="col-span-4 md:col-span-1 flex items-center">
+            <input
+              v-model="config.bgTop"
+              id="default-checkbox"
+              type="checkbox"
+              class="w-4 h-4 rounded text-primary border-blue-100 focus:ring-primary focus:ring-1"
+            />
+            <label
+              for="default-checkbox"
+              class="ml-2 text-sm font-medium capitalize"
+            >
+              {{ title }} background in top
+            </label>
           </div>
         </div>
         <div class="grid grid-cols-2 md:grid-cols-4 gap-3 mb-4">
-          <label
-            class="btn btn-secondary w-full cursor-pointer"
-            for="dropzone-file"
-          >
+          <label class="btn btn-primary cursor-pointer" for="dropzone-file">
             change image
           </label>
-          <button class="btn btn-secondary w-full" @click="reset">
-            reset all
-          </button>
-          <button class="btn btn-third w-full" @click="download('png')">
+          <button class="btn btn-primary" @click="reset">reset all</button>
+          <button class="btn btn-primary" @click="download('png')">
             download png
           </button>
-          <button class="btn btn-third w-full" @click="download('jpg')">
+          <button class="btn btn-primary" @click="download('jpg')">
             download jpg
           </button>
         </div>
@@ -131,12 +118,7 @@
           class="relative w-full h-auto overflow-hidden max-w-xl mx-auto"
         >
           <img :src="image" alt="image" class="z-20 relative w-full h-auto" />
-          <img
-            src="./assets/fetrah.jpg"
-            alt="fetrah-bg"
-            class="absolute inset-0 w-full h-full"
-            :class="[setOpacity, config.bgTop ? 'z-30' : 'z-10']"
-          />
+          <bg :class="[setOpacity, config.bgTop ? 'z-30' : 'z-10']" />
         </div>
       </div>
     </main>
@@ -155,6 +137,7 @@ import { saveAsJpeg, saveAsPng } from "save-html-as-image";
 import pkg from "../package.json";
 import UploadIcon from "vue-material-design-icons/CloudUploadOutline.vue";
 import GithubIcon from "vue-material-design-icons/Github.vue";
+import Bg from "./components/bg.vue";
 
 const defaultConfig = {
   opcaity: 50,
@@ -163,7 +146,7 @@ const defaultConfig = {
 
 export default {
   name: "App",
-  components: { UploadIcon, GithubIcon },
+  components: { UploadIcon, GithubIcon, Bg },
   data: () => ({
     title: "fetrah",
     APP_NAME: pkg.name,

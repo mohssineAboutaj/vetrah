@@ -6,17 +6,9 @@
 
 /* buttons */
 .btn {
-  @apply rounded-lg py-4 px-6 mt-10 uppercase transition-colors ease-in-out duration-500 font-bold;
+  @apply rounded-lg py-4 px-6 mt-10 uppercase transition-colors ease-in-out duration-500 font-bold text-center w-full;
 }
 
 .btn-primary {
-  @apply bg-primary text-secondary hover:text-primary hover:bg-secondary;
-}
-
-.btn-secondary {
-  @apply text-primary bg-secondary hover:bg-primary hover:text-secondary;
-}
-
-.btn-third {
-  @apply text-blue-100 bg-blue-700 hover:bg-blue-600;
+  @apply text-blue-100 bg-blue-500 hover:bg-primary;
 }
