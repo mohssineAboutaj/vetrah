@@ -1,7 +1,8 @@
 {
   "name": "vetrah",
-  "version": "0.7.1",
+  "version": "0.8.0",
   "description": "A simple project based on Vue.js and Tailwindcss to support the #fetrah movment",
+  "author": "Mohssine Aboutaj",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -23,7 +24,8 @@
     "eslint": "^7.32.0",
     "eslint-plugin-vue": "^8.0.3",
     "postcss": "^8.4.14",
-    "tailwindcss": "^3.1.5"
+    "tailwindcss": "^3.1.5",
+    "vue-cli-plugin-meta": "~0.1.1"
   },
   "eslintConfig": {
     "root": true,
@@ -45,8 +47,10 @@
     "not dead",
     "not ie 11"
   ],
-  "license": "MIT",
-  "author": "Mohssine Aboutaj",
+  "bugs": {
+    "url": "https://github.com/mohssineAboutaj/vetrah/issues"
+  },
+  "homepage": "https://github.com/mohssineAboutaj/vetrah#readme",
   "keywords": [
     "fetrah",
     "support",
@@ -65,12 +69,9 @@
     "fetrah",
     "cover"
   ],
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mohssineAboutaj/vetrah.git"
-  },
-  "bugs": {
-    "url": "https://github.com/mohssineAboutaj/vetrah/issues"
-  },
-  "homepage": "https://github.com/mohssineAboutaj/vetrah#readme"
+  }
 }

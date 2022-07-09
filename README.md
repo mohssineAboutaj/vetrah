@@ -18,7 +18,7 @@ An open souce project based on [Vue.js](https://vuejs.org/) and [Tailwindcss](ht
 
 ## Features
 
-- Add fetrah background in your image
+- Add fetrah filter in your image
 - download it as **PNG** or **JPG/JPEG**
 
 ## Contributors

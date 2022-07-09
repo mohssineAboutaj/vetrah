@@ -69,7 +69,7 @@
               for="steps-range"
               class="block mb-2 text-sm font-medium capitalize"
             >
-              background opacity
+              filter opacity
             </label>
             <input
               v-model="config.opcaity"
@@ -92,7 +92,7 @@
               for="default-checkbox"
               class="ml-2 text-sm font-medium capitalize"
             >
-              {{ title }} background in top
+              {{ title }} filter in top
             </label>
           </div>
         </div>
