@@ -138,14 +138,13 @@ import FooterComponent from "./components/FooterComponent.vue";
 import { reactive, ref } from "vue";
 import { computed } from "@vue/reactivity";
 
+// data
+/// static
+const globalStringToReplace = "image/";
 const defaultConfig = {
   opcaity: 50,
   bgTop: true,
 };
-
-// data
-/// static
-const globalStringToReplace = "image/";
 /// reactives
 const getStarted = ref(false);
 const image = ref("");
