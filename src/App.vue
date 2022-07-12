@@ -9,7 +9,7 @@
       <div
         class="flex justify-center items-center w-full h-full bg-black bg-opacity-50 relative z-10"
       >
-        <div class="relative text-center">
+        <div class="relative text-center container mx-auto">
           <h1 class="font-bold mb-16 text-4xl md:text-6xl">
             <div class="mb-4">#{{ title }}</div>
             <div class="mb-4">#support{{ title }}</div>
@@ -38,8 +38,6 @@
             <upload-icon :size="80" class="mb-4" />
             <p>
               <span class="font-semibold">Click to upload</span>
-              <span v-if="false">or</span>
-              <span v-if="false" class="font-semibold">drag and drop</span>
             </p>
             <p class="uppercase font-bold">
               {{
@@ -130,113 +128,109 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { saveAsJpeg, saveAsPng } from "save-html-as-image";
-import { title } from "@/config";
+import { APP_NAME, title } from "@/config";
 import UploadIcon from "vue-material-design-icons/CloudUploadOutline.vue";
 import NavbarComponent from "./components/NavbarComponent.vue";
 import BgComponent from "./components/BgComponent.vue";
 import FooterComponent from "./components/FooterComponent.vue";
+import { reactive, ref } from "vue";
+import { computed } from "@vue/reactivity";
 
 const defaultConfig = {
   opcaity: 50,
   bgTop: true,
 };
 
-export default {
-  name: "App",
-  components: { UploadIcon, NavbarComponent, BgComponent, FooterComponent },
-  data: () => ({
-    title,
-    globalStringToReplace: "image/",
-    image: "",
-    getStarted: false,
-    moved: false,
-    config: Object.assign({}, defaultConfig),
-    defaultConfig,
-    acceptFilesType: ["image/png", "image/jpeg", "image/jpg"],
-  }),
-  computed: {
-    setOpacity() {
-      switch (Number(this.config.opcaity)) {
-        case 5:
-          return "opacity-5";
-        case 10:
-          return "opacity-10";
-        case 15:
-          return "opacity-15";
-        case 20:
-          return "opacity-20";
-        case 25:
-          return "opacity-25";
-        case 30:
-          return "opacity-30";
-        case 35:
-          return "opacity-35";
-        case 40:
-          return "opacity-40";
-        case 45:
-          return "opacity-45";
-        case 50:
-          return "opacity-50";
-        case 55:
-          return "opacity-55";
-        case 60:
-          return "opacity-60";
-        case 65:
-          return "opacity-65";
-        case 70:
-          return "opacity-70";
-        case 75:
-          return "opacity-75";
-        case 80:
-          return "opacity-80";
-        case 85:
-          return "opacity-85";
-        case 90:
-          return "opacity-90";
-        case 95:
-          return "opacity-95";
-        default:
-          return this.defaultConfig.opcaity;
-      }
-    },
-  },
-  methods: {
-    readAsDataURL(file) {
-      return new Promise((resolve, reject) => {
-        const fr = new FileReader();
-        fr.onload = () => resolve(fr.result);
-        fr.onerror = () => reject(fr);
-        fr.readAsDataURL(file);
-      });
-    },
-    preview(e) {
-      if (e.target.files && e.target.files.length > 0) {
-        const file = e.target.files[0];
+// data
+/// static
+const globalStringToReplace = "image/";
+/// reactives
+const getStarted = ref(false);
+const image = ref("");
+const config = reactive(defaultConfig);
+const acceptFilesType = reactive(["image/png", "image/jpeg", "image/jpg"]);
 
-        this.readAsDataURL(file).then((data) => {
-          this.image = data;
-        });
-      }
-    },
-    reset() {
-      this.config = this.defaultConfig;
-      this.image = "";
-    },
-    download(type = "png") {
-      const node = document.getElementById("image-container");
-      const options = {
-        filename: this.APP_NAME + "-" + Date.now(),
-        printDate: false,
-      };
+// computed
+const setOpacity = computed(() => {
+  switch (Number(config.opcaity)) {
+    case 5:
+      return "opacity-5";
+    case 10:
+      return "opacity-10";
+    case 15:
+      return "opacity-15";
+    case 20:
+      return "opacity-20";
+    case 25:
+      return "opacity-25";
+    case 30:
+      return "opacity-30";
+    case 35:
+      return "opacity-35";
+    case 40:
+      return "opacity-40";
+    case 45:
+      return "opacity-45";
+    case 50:
+      return "opacity-50";
+    case 55:
+      return "opacity-55";
+    case 60:
+      return "opacity-60";
+    case 65:
+      return "opacity-65";
+    case 70:
+      return "opacity-70";
+    case 75:
+      return "opacity-75";
+    case 80:
+      return "opacity-80";
+    case 85:
+      return "opacity-85";
+    case 90:
+      return "opacity-90";
+    case 95:
+      return "opacity-95";
+    default:
+      return defaultConfig.opcaity;
+  }
+});
 
-      if (type === "png") {
-        saveAsPng(node, options);
-      } else {
-        saveAsJpeg(node, options);
-      }
-    },
-  },
-};
+// methods
+function readAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const fr = new FileReader();
+    fr.onload = () => resolve(fr.result);
+    fr.onerror = () => reject(fr);
+    fr.readAsDataURL(file);
+  });
+}
+function preview(e) {
+  if (e.target.files && e.target.files.length > 0) {
+    const file = e.target.files[0];
+
+    readAsDataURL(file).then((data) => {
+      image.value = data;
+    });
+  }
+}
+function reset() {
+  Object.assign(config, defaultConfig);
+  image.value = "";
+}
+function download(type = "png") {
+  const node = document.getElementById("image-container");
+  const options = {
+    filename: APP_NAME + "-" + Date.now(),
+    printDate: false,
+  };
+
+  if (type === "png") {
+    saveAsPng(node, options);
+  } else {
+    saveAsJpeg(node, options);
+  }
+}
 </script>

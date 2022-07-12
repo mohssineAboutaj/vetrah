@@ -17,28 +17,25 @@
   </nav>
 </template>
 
-<script>
+<script setup>
 import GithubIcon from "vue-material-design-icons/Github.vue";
 import { APP_NAME, APP_REPO } from "@/config";
+import { onMounted, ref } from "vue";
 
-export default {
-  components: { GithubIcon },
-  data: () => ({
-    APP_NAME,
-    APP_REPO,
-    moved: false,
-  }),
-  mounted() {
-    this.checkScrollY();
+// data
+const moved = ref(false);
 
-    window.addEventListener("scroll", () => {
-      this.checkScrollY();
-    });
-  },
-  methods: {
-    checkScrollY() {
-      this.moved = window.scrollY > 5;
-    },
-  },
-};
+// methods
+function checkScrollY() {
+  moved.value = window.scrollY > 5;
+}
+
+// lifecycle hooks
+onMounted(() => {
+  checkScrollY();
+
+  window.addEventListener("scroll", () => {
+    checkScrollY();
+  });
+});
 </script>

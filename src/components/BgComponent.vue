@@ -4,9 +4,3 @@
     <div class="bg-primary"></div>
   </div>
 </template>
-
-<script>
-export default {
-  name: "BgComponent",
-};
-</script>

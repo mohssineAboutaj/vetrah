@@ -18,10 +18,6 @@
   </footer>
 </template>
 
-<script>
+<script setup>
 import { APP_AUTHOR, title } from "@/config";
-
-export default {
-  data: () => ({ title, APP_AUTHOR }),
-};
 </script>
