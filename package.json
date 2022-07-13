@@ -1,6 +1,6 @@
 {
   "name": "vetrah",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "A simple project based on Vue.js and Tailwindcss to support the #fetrah movment",
   "author": "Mohssine Aboutaj",
   "scripts": {
